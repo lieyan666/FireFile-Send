@@ -1,3 +1,8 @@
+# priv
+client/downloads/
+server/uploads/
+config.json
+
 # Logs
 logs
 *.log

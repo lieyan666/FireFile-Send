@@ -1,0 +1,84 @@
+<!--
+ * @Author: Lieyan
+ * @Date: 2024-10-16 19:11:49
+ * @LastEditors: Lieyan
+ * @LastEditTime: 2024-10-16 19:11:55
+ * @FilePath: /FireFile-Send/server/public/index.html
+ * @Description: 
+ * @Contact: QQ: 2102177341  Website: lieyan.space  Github: @lieyan666
+ * @Copyright: Copyright (c) 2024 by lieyanDevTeam, All Rights Reserved. 
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type="file"], input[type="password"] {
+            margin: 10px 0;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #4cae4c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Upload File</h2>
+        <form id="uploadForm" enctype="multipart/form-data">
+            <input type="password" id="password" placeholder="Upload Password" required>
+            <br>
+            <input type="file" id="file" name="file" required>
+            <br>
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData();
+            const password = document.getElementById('password').value;
+            const fileInput = document.getElementById('file');
+            formData.append('file', fileInput.files[0]);
+            formData.append('password', password);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.text())
+            .then(data => {
+                alert(data);
+                document.getElementById('uploadForm').reset();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>
